@@ -1,0 +1,112 @@
+ALGORITHME CARRE MAGIQUE
+BUT : Afficher un carré magique 
+ENTREE : /
+SORTIE : Affichage d'un carré magique sous forme de tableau en 2 dimensions défini en fonction de la constante
+
+CONST : 
+	TAILLE<-5
+
+
+
+PROCEDURE IniTab (Tab2d : Tableau[1..TAILLE][1..TAILLE]d'ENTIER) //Procedure qui initialise la matrice
+
+VAR :
+	i,j : ENTIER
+
+DEBUT
+	i<-0
+	j<-0
+	POUR i DE 1 A TAILLE 			//Double boucle pour initialiser le tableau avec un zéro pour chaque cellules
+	FAIRE
+		POUR j DE 1 A TAILLE
+		FAIRE
+			Tab2d[i,j]<-0
+		FINPOUR
+	FINPOUR
+FINPROCEDURE
+
+
+
+PROCEDURE Placement (Tab2d : Tableau[1..TAILLE][1..TAILLE]d'ENTIER) //Procédure principale qui rempli la matrice
+
+VAR : 
+	nb, l, c : ENTIER
+
+DEBUT
+	nb<-1
+	l<-(TAILLE/2)-1 	//Initialisation de la variables de la ligne pour commencer à la ligne au dessus de la moitié du tableau
+	c<-(TAILLLE/2)		//Initialisation de la variables de la colonne pour commencer à la colonne de milieu du tableau
+	Tab2d[l,c]<-nb		//Placement de premier nombre (1) à l'emplacement défini via la ligne et la colonne 
+
+	REPETER				//Boucle principale qui se répete jusqu'au placement du dernier nombre (TAILLE*TAILLE)
+		nb<-nb+1		//Augmentation du nombre de 1 à chaque tour
+		l<-l-1			//Diminution de la ligne ciblé à chque tour
+		c<-c+1			//Augmentation de la colonne ciblé à chaque tour
+		Si l = 0 OU c = TAILLE + 1 OU c = 0 	//Permet d'avoir un tableau sphérique en selectionnant la ligne et/ou la colonne de l'autre coté si elles sortent du tableau
+		ALORS
+			Si l = 0
+			ALORS
+				l = TAILLE
+			FINSI
+			SI c = TAILLE
+			ALORS
+				c = 1
+			FINSI
+			SI c = 0
+			ALORS
+				c = TAILLE
+		FINSI
+		TANTQUE Tab2d[l,c] <> 0					//Boucle permetant de déplacé la case selectionner en haut à gauche (à la place de en haut à droite) si la cellule est déjà rempli (<>0)
+		FAIRE
+			l<-l-1
+			c<-c-1
+			Si l = 0 OU c = TAILLE + 1 OU c = 0 //Verification pour avoir un tableau sphérique
+			ALORS
+				Si l = 0
+				ALORS
+					l = TAILLE
+				FINSI
+				SI c = TAILLE
+				ALORS
+					c = 1
+				FINSI
+				SI c = 0
+				ALORS
+					c = TAILLE
+				FINSI
+			FINSI
+		FINTANTQUE
+		Tab2d[l,c]<-nb						//Remplissage de la cellule, après avoir selectionner une case libre, avec le nombre
+	TANTQUE nb <> TAILLE*TAILLE
+FINPROCEDURE
+
+
+
+PROCEDURE Affichage (Tab2d : Tableau [1..TAILLE][1..TAILLE]d'ENTIER)  //Procédure pour afficher la matrice à l'écran
+
+VAR:
+	i,j : ENTIER
+
+DEBUT
+	i<-0
+	j<-0
+	POUR i DE 1 A TAILLE 				//Double boucle qui permet l'affichage de la matrice cellules par cellules
+	FAIRE
+		POUR j DE 1 A TAILLE
+		FAIRE
+			ECRIRE Tab2d[i,j]
+		FINPOUR
+	FINPOUR
+FINPROCEDURE
+
+
+
+//main
+VAR:
+	Tab2d : Tableau[1..TAILLE][1..TAILLE]d'ENTIER
+
+DEBUT
+	IniTab(Tab2d) //Appel de la procédure d'initialisation
+	Placement(Tab2d) //Appel de la procédure de remplissage du tableau 
+	Affichage(Tab2d) //Appel de la procédure qui affiche le tableau à l'écran
+FIN

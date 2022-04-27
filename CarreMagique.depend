@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1651062900 source:c:\users\trist\desktop\projet_codeblocks\carremagique\main.c
+	<stdio.h>
+	<stdlib.h>
+
